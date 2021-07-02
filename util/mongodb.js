@@ -1,6 +1,9 @@
 import { MongoClient } from "mongodb";
-const MONGODB_URI = process.env.DATABASE_URL || process.env.MONGODB_URI;
+import fs from "fs";
+
+const MONGODB_URI = provess.env.DATABASE_URL || process.env.MONGODB_URI;
 const MONGODB_DB = process.env.MONGODB_DB;
+const MONGODB_CERT_PATH = provess.env.CA_CERT || process.env.MONGODB_CERT_PATH;
 
 if (!MONGODB_URI) {
   throw new Error(
@@ -31,9 +34,13 @@ export async function connectToDatabase() {
   }
 
   if (!cached.promise) {
+    const ca = [fs.readFileSync(MONGODB_CERT_PATH)];
+
     const opts = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      sslValidate: true,
+      sslCA: ca,
     };
 
     cached.promise = MongoClient.connect(MONGODB_URI, opts).then((client) => {
