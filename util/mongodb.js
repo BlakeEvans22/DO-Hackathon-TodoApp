@@ -50,6 +50,10 @@ export async function connectToDatabase() {
       sslCA: CA_CERT,
     };
 
+    console.log("CA_CERT " + CA_CERT);
+    console.log("ca " + ca);
+    console.log("MONGODB_URI " + MONGODB_URI);
+
     cached.promise = MongoClient.connect(MONGODB_URI, opts).then((client) => {
       return {
         client,
