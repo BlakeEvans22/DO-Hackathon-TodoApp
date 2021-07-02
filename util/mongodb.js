@@ -6,9 +6,7 @@ const MONGODB_DB = process.env.MONGODB_DB;
 const MONGODB_CERT_PATH = process.env.MONGODB_CERT_PATH;
 const CA_CERT = process.env.CA_CERT;
 
-const ca = CA_CERT
-  ? [fs.readFileSync(CA_CERT)]
-  : [fs.readFileSync(MONGODB_CERT_PATH)];
+const ca = CA_CERT ? CA_CERT : fs.readFileSync(MONGODB_CERT_PATH);
 
 if (!MONGODB_URI) {
   throw new Error(
