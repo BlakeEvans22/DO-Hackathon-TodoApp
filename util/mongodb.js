@@ -3,7 +3,12 @@ import fs from "fs";
 
 const MONGODB_URI = process.env.DATABASE_URL || process.env.MONGODB_URI;
 const MONGODB_DB = process.env.MONGODB_DB;
-const MONGODB_CERT_PATH = process.env.CA_CERT || process.env.MONGODB_CERT_PATH;
+const MONGODB_CERT_PATH = process.env.MONGODB_CERT_PATH;
+const CA_CERT = process.env.CA_CERT;
+
+const ca = CA_CERT
+  ? [fs.readFileSync(CA_CERT)]
+  : [fs.readFileSync(MONGODB_CERT_PATH)];
 
 if (!MONGODB_URI) {
   throw new Error(
@@ -14,6 +19,12 @@ if (!MONGODB_URI) {
 if (!MONGODB_DB) {
   throw new Error(
     "Please define the MONGODB_DB environment variable inside .env.local"
+  );
+}
+
+if (!CA_CERT && !MONGODB_CERT_PATH) {
+  throw new Error(
+    "Please define the MONGODB_CERT_PATH environment variable inside .env.local"
   );
 }
 
@@ -34,8 +45,6 @@ export async function connectToDatabase() {
   }
 
   if (!cached.promise) {
-    const ca = [fs.readFileSync(MONGODB_CERT_PATH)];
-
     const opts = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
