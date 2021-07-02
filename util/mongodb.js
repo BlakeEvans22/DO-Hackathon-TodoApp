@@ -47,7 +47,7 @@ export async function connectToDatabase() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       sslValidate: true,
-      sslCA: ca,
+      sslCA: CA_CERT,
     };
 
     cached.promise = MongoClient.connect(MONGODB_URI, opts).then((client) => {
