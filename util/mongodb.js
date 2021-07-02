@@ -1,9 +1,9 @@
 import { MongoClient } from "mongodb";
 import fs from "fs";
 
-const MONGODB_URI = provess.env.DATABASE_URL || process.env.MONGODB_URI;
+const MONGODB_URI = process.env.DATABASE_URL || process.env.MONGODB_URI;
 const MONGODB_DB = process.env.MONGODB_DB;
-const MONGODB_CERT_PATH = provess.env.CA_CERT || process.env.MONGODB_CERT_PATH;
+const MONGODB_CERT_PATH = process.env.CA_CERT || process.env.MONGODB_CERT_PATH;
 
 if (!MONGODB_URI) {
   throw new Error(
