@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.DATABASE_URL || process.env.MONGODB_URI;
 const MONGODB_DB = process.env.MONGODB_DB;
 
 if (!MONGODB_URI) {
