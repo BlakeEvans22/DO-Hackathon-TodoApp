@@ -40,7 +40,7 @@ export async function connectToDatabase() {
     return cached.conn;
   }
 
-  const ca = CA_CERT ? CA_CERT : fs.readFileSync(MONGODB_CERT_PATH);
+  //const ca = CA_CERT ? CA_CERT : fs.readFileSync(MONGODB_CERT_PATH);
 
   if (!cached.promise) {
     const opts = {
@@ -51,7 +51,7 @@ export async function connectToDatabase() {
     };
 
     console.log("CA_CERT " + CA_CERT);
-    console.log("ca " + ca);
+    //console.log("ca " + ca);
     console.log("MONGODB_URI " + MONGODB_URI);
 
     cached.promise = MongoClient.connect(MONGODB_URI, opts).then((client) => {
