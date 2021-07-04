@@ -6,7 +6,7 @@ const MONGODB_DB = process.env.MONGODB_DB;
 const MONGODB_CERT_PATH = process.env.MONGODB_CERT_PATH;
 const CA_CERT = process.env.CA_CERT;
 
-/* if (!MONGODB_URI) {
+if (!MONGODB_URI) {
   throw new Error(
     "Please define the MONGODB_URI environment variable inside .env.local"
   );
@@ -22,7 +22,7 @@ if (!CA_CERT && !MONGODB_CERT_PATH) {
   throw new Error(
     "Please define the MONGODB_CERT_PATH environment variable inside .env.local"
   );
-} */
+}
 
 /**
  * Global is used here to maintain a cached connection across hot reloads
@@ -40,19 +40,15 @@ export async function connectToDatabase() {
     return cached.conn;
   }
 
-  //const ca = CA_CERT ? CA_CERT : fs.readFileSync(MONGODB_CERT_PATH);
+  const ca = CA_CERT ? CA_CERT : fs.readFileSync(MONGODB_CERT_PATH);
 
   if (!cached.promise) {
     const opts = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       sslValidate: true,
-      sslCA: CA_CERT,
+      sslCA: ca,
     };
-
-    console.log("CA_CERT " + CA_CERT);
-    //console.log("ca " + ca);
-    console.log("MONGODB_URI " + MONGODB_URI);
 
     cached.promise = MongoClient.connect(MONGODB_URI, opts).then((client) => {
       return {
