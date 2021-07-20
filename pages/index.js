@@ -6,7 +6,6 @@ export default function Todos() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   useEffect(() => {
-    console.log(baseUrl);
     getTodos();
   }, []);
 
@@ -31,6 +30,7 @@ export default function Todos() {
         },
         method: "POST",
       });
+      setNewTodo("");
       getTodos();
     } catch (error) {
       alert(error);
