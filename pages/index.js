@@ -3,15 +3,16 @@ import { useState, useEffect } from "react";
 export default function Todos() {
   const [newTodo, setNewTodo] = useState("");
   const [todos, setTodos] = useState([]);
-  const baseUrl = process.env.BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   useEffect(() => {
+    console.log(baseUrl);
     getTodos();
   }, []);
 
   const getTodos = async () => {
     try {
-      fetch(`${baseUrl}:3000/api/todo`)
+      fetch(`${baseUrl}/api/todo`)
         .then((response) => response.json())
         .then((data) => setTodos(data));
     } catch (error) {
@@ -21,7 +22,7 @@ export default function Todos() {
 
   const addTodo = async () => {
     try {
-      await fetch(`${baseUrl}:3000/api/todo`, {
+      await fetch(`${baseUrl}/api/todo`, {
         body: JSON.stringify({
           newTodo,
         }),
@@ -38,7 +39,7 @@ export default function Todos() {
 
   const deleteTodo = async (id) => {
     try {
-      await fetch(`${baseUrl}:3000/api/todo`, {
+      await fetch(`${baseUrl}/api/todo`, {
         body: JSON.stringify({
           id,
         }),
@@ -56,7 +57,7 @@ export default function Todos() {
 
   const changeComplete = async (id, complete) => {
     try {
-      await fetch(`${baseUrl}:3000/api/todo`, {
+      await fetch(`${baseUrl}/api/todo`, {
         body: JSON.stringify({
           id,
           complete,
