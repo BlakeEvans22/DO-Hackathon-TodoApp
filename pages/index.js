@@ -10,7 +10,7 @@ export default function Todos() {
 
   const getTodos = async () => {
     try {
-      fetch("http://localhost:3000/api/todo")
+      fetch("https://localhost:3000/api/todo")
         .then((response) => response.json())
         .then((data) => setTodos(data));
     } catch (error) {
@@ -20,7 +20,7 @@ export default function Todos() {
 
   const addTodo = async () => {
     try {
-      await fetch("http://localhost:3000/api/todo", {
+      await fetch("https://localhost:3000/api/todo", {
         body: JSON.stringify({
           newTodo,
         }),
@@ -37,7 +37,7 @@ export default function Todos() {
 
   const deleteTodo = async (id) => {
     try {
-      await fetch("http://localhost:3000/api/todo", {
+      await fetch("https://localhost:3000/api/todo", {
         body: JSON.stringify({
           id,
         }),
@@ -55,7 +55,7 @@ export default function Todos() {
 
   const changeComplete = async (id, complete) => {
     try {
-      await fetch("http://localhost:3000/api/todo", {
+      await fetch("https://localhost:3000/api/todo", {
         body: JSON.stringify({
           id,
           complete,
